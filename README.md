@@ -35,13 +35,13 @@
    ```bash
    git clone https://github.com/HUANCHUAN/CheckUpdate_for_HONOR_MagicBook.git
    cd CheckUpdate_for_HONOR_MagicBook
-4. **安装依赖**
+4. **安装依赖**（须在同一目录运行）
    ```bash
    pip install -r requirements.txt
-4. **运行程序**
+4. **运行程序**（须在同一目录运行）
    ```bash
    python main.py
-注：推荐 PyCharm 运行，可直接点击链接进入。1.0.0-beta之后的版本加入了按任意键退出，PyCharm 无法模拟，需手动退出。建议使用 PyCharm 终端运行或删除最后的代码。
+注：推荐 PyCharm 运行，可直接点击链接进入。但1.0.0-beta之后的版本加入了按任意键退出，PyCharm 直接运行时无法模拟，需手动退出。建议使用 PyCharm 终端运行或删除最后的代码。
 
 ## 📂 项目结构
 CheckUpdate_for_HONOR_MagicBook/  
@@ -57,6 +57,6 @@ CheckUpdate_for_HONOR_MagicBook/
 Copilot 提供代码辅助，部分代码由其编写、优化。
 
 ## ⚠️ 注意
-如果网络连接失败或本地路径、官网结构变化等，都可能会导致检查更新异常，请检查网络或联系作者更新脚本。  
+如果网络连接失败或本地路径、官网结构变化等，都可能会导致检查更新异常，请检查网络或联系本人更新脚本。如有能力也可以自行适配  
 若有任何问题，欢迎随时联系 HUANCHUAN！（QQ 搜索 HUANCHUAN 即可找到）  
 欢迎会做 UI 的同学来一起适配一下带 UI 的版本~
