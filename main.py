@@ -1,5 +1,5 @@
 # HUANCHUAN with Copilot
-# 说明：此版本忽略识别补丁包版本（一般发布版本已合入最新补丁，识别补丁包版本意义不大，且可能造成bug）
+# 说明：此版本忽略识别补丁包版本。一般官网发布版本已合入最新补丁，识别补丁包版本意义不大，且容易造成bug
 
 import requests
 from bs4 import BeautifulSoup
