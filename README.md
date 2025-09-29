@@ -22,7 +22,8 @@
 [yoyo_assistant] 本地版本：10.0.1.16(SP2) 官网版本：9.0.2.42 (SP10)  
 ℹ️ 荣耀 YOYO 助理 当前本地安装版本或为测试版，版本高于官网版本  
 🔗 官网链接: https://www.honor.com/cn/tech/pc-yoyo-assistant-2/  
-  
+
+按任意键退出...（注：按下 Ctrl+C 不会退出）  
 
 ## 📦 环境要求
 - Python 3.8 及以上版本（推荐 Python 3.12、3.13，已测试可正常运行本项目的 main.py）  
