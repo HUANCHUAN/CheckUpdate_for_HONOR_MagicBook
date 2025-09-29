@@ -73,6 +73,8 @@ def clean_version(v, remove_patch=True):
         v = re.sub(r"\(.*?\)", "", v).strip()
     return v
 
+print("\n🔛 程序开始运行啦！\n")
+
 # 主循环
 for key, info in pages.items():
     try:
