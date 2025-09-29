@@ -30,7 +30,7 @@
 - Windows 11 系统（此项目专为部分 HONOR MagicBook 适配，其他品牌电脑可能无法正常使用）  
 - 网络连接（用于获取最新版本信息）  
 
-## 🔧 安装与运行（推荐 PyCharm 运行，可直接点击链接进入）
+## 🔧 安装与运行
 1. **克隆仓库**
    ```bash
    git clone https://github.com/HUANCHUAN/CheckUpdate_for_HONOR_MagicBook.git
@@ -41,6 +41,7 @@
 4. **运行程序**
    ```bash
    python main.py
+注：推荐 PyCharm 运行，可直接点击链接进入。1.0.0-beat之后的版本加入了按任意键退出，PyCharm 无法模拟，需手动退出。建议使用 PyCharm 终端运行或删除最后的代码。
 
 ## 📂 项目结构
 CheckUpdate_for_HONOR_MagicBook/  
