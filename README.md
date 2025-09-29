@@ -39,10 +39,10 @@
 
 ## 📂 项目结构
 CheckUpdate_for_HONOR_MagicBook/
-├── main.py              # 主程序入口
-├── requirements.txt     # 依赖列表
-├── README.md            # 项目说明
-└── LICENSE              # 开源许可证
+├── main.py              # 主程序入口  
+├── requirements.txt     # 依赖列表  
+├── README.md            # 项目说明  
+└── LICENSE              # 开源许可证  
 
 ## 📄 许可证
 本项目采用 MIT License 开源协议，允许自由使用、修改和分发，但需保留版权声明。
