@@ -1,13 +1,13 @@
 # HUANCHUAN with Copilot
 # 说明：此版本忽略识别补丁包版本。一般官网发布版本已合入最新补丁，识别补丁包版本意义不大，且容易造成bug
 
+import os
+import re
 import msvcrt
+import winreg
 import requests
 from bs4 import BeautifulSoup
-import re
 import xml.etree.ElementTree as ET
-import os
-import winreg
 
 # 中文名称映射
 names = {
@@ -121,7 +121,7 @@ for key, info in pages.items():
     except Exception as e:
         print(f"[{key}] 检查更新失败: {e}\n")
 
-print("按任意键退出...（注：按下 Ctrl+C 不会退出）")
+print("按任意键退出...（注：按下 Ctrl+C 不会退出）") # 如直接使用 IDE 运行，建议删除以下代码
 while True:
     key = msvcrt.getch()
     break
