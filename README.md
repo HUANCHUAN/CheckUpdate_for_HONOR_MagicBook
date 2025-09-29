@@ -41,7 +41,7 @@
 4. **运行程序**
    ```bash
    python main.py
-注：推荐 PyCharm 运行，可直接点击链接进入。1.0.0-beat之后的版本加入了按任意键退出，PyCharm 无法模拟，需手动退出。建议使用 PyCharm 终端运行或删除最后的代码。
+注：推荐 PyCharm 运行，可直接点击链接进入。1.0.0-beta之后的版本加入了按任意键退出，PyCharm 无法模拟，需手动退出。建议使用 PyCharm 终端运行或删除最后的代码。
 
 ## 📂 项目结构
 CheckUpdate_for_HONOR_MagicBook/  
