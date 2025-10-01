@@ -1,4 +1,4 @@
-# CheckUpdate_for_HONOR_MagicBook
+# CheckUpdate_for_HONOR_MagicBook 1.0.0 - 1.0.1
 
 这是 Copilot 与 HUANCHUAN 共创的工具，使用 Python 开发，用于检测部分新款 HONOR MagicBook 的荣耀电脑管家、荣耀超级工作台、荣耀 YOYO 助理等三款应用的更新，帮助用户快速获取官网是否有新版本可用。
 
