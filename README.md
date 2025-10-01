@@ -37,7 +37,7 @@
 ---
 
 ## 📥 下载与运行
-### 方式一：直接运行 `.exe`（推荐不熟悉编程的用户使用）
+### 方式一：直接运行 `.exe`（推荐不熟悉编程的用户使用，仅限2.0及以上版本）
 1. 前往 [Releases](../../releases) 页面下载最新版本的压缩包，运行里面的 `.exe` 文件
 2. 双击运行即可（无需安装 Python）
 3. 如果运行提示缺少运行库，请安装 [Microsoft Visual C++ Redistributable](https://learn.microsoft.com/zh-cn/cpp/windows/latest-supported-vc-redist)
