@@ -19,7 +19,7 @@
 ---
 
 ## 📥 下载与运行
-1. 前往 Release 页面下载最新的压缩包，在2.0的exe文件包中有 `CheckUpdate_for_HONOR_MagicBook 2.0.0.exe` 文件
+1. 前往 Release 页面下载最新的压缩包，在2.0的文件夹中有 `CheckUpdate_for_HONOR_MagicBook 2.0.0.exe` 文件
 2. 双击运行即可（无需额外安装 Python）
 3. 如果运行提示缺少运行库，请安装 [Microsoft Visual C++ Redistributable](https://learn.microsoft.com/zh-cn/cpp/windows/latest-supported-vc-redist)
 
