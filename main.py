@@ -1,4 +1,4 @@
-# HUANCHUAN with Copilot
+# HUANCHUAN with Copilot  版本号：1.0.1
 # 说明：此版本忽略识别补丁包版本。一般官网发布版本已合入最新补丁，识别补丁包版本意义不大，且容易造成bug
 # 实测荣耀 MagicBook Pro 16 使用完全正常，如有 bug 可以 QQ 搜索 HUANCHUAN 联系反馈，谢谢！
 
@@ -122,7 +122,7 @@ for key, info in pages.items():
     except Exception as e:
         print(f"[{key}] 检查更新失败: {e}\n")
 
-print("按任意键退出...（注：按下 Ctrl+C 不会退出）") # 如直接使用 IDE 运行，建议删除以下代码或运行后手动停止
+print("按任意键退出...（注：按下 Ctrl+C 不会退出）") # 如直接使用 IDE 运行，建议删除以下代码或运行后手动停止（删除掉就是1.0.0）
 while True:
     key = msvcrt.getch()
     break
