@@ -122,7 +122,7 @@ for key, info in pages.items():
     except Exception as e:
         print(f"[{key}] 检查更新失败: {e}\n")
 
-print("按任意键退出...（注：按下 Ctrl+C 不会退出）") # 如直接使用 IDE 运行，建议删除以下代码或运行后手动停止（删除掉就是1.0.0）
+print("按任意键退出...（注：按下 Ctrl+C 不会退出）") # 如直接使用 IDE 运行，建议删除以下代码或运行后手动停止（删除掉这一段就是1.0.0）
 while True:
     key = msvcrt.getch()
     break
