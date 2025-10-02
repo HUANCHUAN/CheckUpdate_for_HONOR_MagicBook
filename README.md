@@ -88,5 +88,5 @@ CheckUpdate_for_HONOR_MagicBook/
 - 需要联网才能获取官网版本信息
 - 如果官网页面结构变化，可能会导致检测失败，请 QQ 联系 HUANCHUAN 做适配处理
 - .exe 文件可能会被杀毒软件误报，请自行判断是否信任
-- 若提示以下内容，点击**更多信息 > 仍要运行**即可
-  <img width="545" height="510" alt="Windows 已保护你的电脑" src="https://github.com/user-attachments/assets/8f98381d-959c-46ef-aaa7-371ba1400945" />
+- 若提示以下内容，点击**更多信息 > 仍要运行**即可  
+<img width="545" height="510" alt="Windows 已保护你的电脑" src="https://github.com/user-attachments/assets/8f98381d-959c-46ef-aaa7-371ba1400945" />
