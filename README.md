@@ -72,10 +72,10 @@
 
 ## 📂 项目结构
 CheckUpdate_for_HONOR_MagicBook/  
-├── 1.0/                 # Python 命令行版  
-├── 2.0/                 # Tkinter 桌面版  
-├── README.md            # 项目总说明（当前文件）  
-└── LICENSE              # 开源许可证  
+├── 1.0/                       # Python 命令行版  
+├── 2.0/                       # Tkinter 桌面版  
+├── README.md                  # 项目总说明（当前文件）  
+└── LICENSE                    # 开源许可证  
 
 ## 📄 许可证
 本项目采用 MIT License 开源协议，允许自由使用、修改和分发，但需保留版权声明。此外，本项目仅供学习和交流使用，禁止用于商业用途。
