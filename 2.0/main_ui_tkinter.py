@@ -1,3 +1,8 @@
+# HUANCHUAN with Copilot  版本号：2.0.0
+# 说明：此版本不会识别补丁包版本。一般官网发布版本已合入最新补丁，识别补丁包版本意义不大，且容易造成bug
+# 实测荣耀 MagicBook Pro 16 使用完全正常，如有 bug 可以 QQ 搜索 HUANCHUAN 联系反馈，谢谢！
+# 此为开源项目，允许分发，但请作出一定说明，谢谢！
+
 import os
 import re
 import winreg
@@ -171,5 +176,6 @@ output_box.place(x=20, y=20, width=560, height=320)
 # 检查按钮
 check_btn = tk.Button(root, text="开始检测", command=run_check, bg="#4CAF50", fg="white", relief="flat", font=("Microsoft YaHei", 10))
 check_btn.place(x=250, y=347, width=100, height=25)
+
 
 root.mainloop()
