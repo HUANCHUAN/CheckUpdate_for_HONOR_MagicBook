@@ -27,10 +27,10 @@
 ## 📦 版本演进
 | 版本 | 框架 | 特点 |
 |------|------|------|
-| **0.0.x** | 纯 Python 命令行 | 未公开，此版本通过 Selenium 实现，且已弃项 |
+| **0.0.x** | 纯 Python 命令行 | 未公开，此版本通过 Selenium 实现，目前已弃项，转为 1.0 版本 |
 | **1.0.x** | 纯 Python 命令行 | 已公开，无 UI，直接在终端输出检测结果，依赖少，运行快 |
 | **2.0.x** | Tkinter 桌面版 | 已公开，轻量 GUI，直接下载打开 .exe 文件即可运行 |
-| **3.0.x** | PySide 桌面版 | 未公开，目前正紧锣密鼓地开发中，已有 Beta 版本 |
+| **3.0.x** | PySide 桌面版 | 未公开，支持 Windows 深色模式。目前正紧锣密鼓地开发中，已有 Beta 版本 |
 
 > 各版本的详细 README 位于对应版本文件夹中。以上已公开版本若无明显问题将不再更新。
 > 如需体验 Beta 版本请 QQ 联系 HUANCHUAN 获取。
@@ -72,10 +72,10 @@
 
 ## 📂 项目结构
 CheckUpdate_for_HONOR_MagicBook/  
-├── 1.0/                       # Python 命令行版  
-├── 2.0/                       # Tkinter 桌面版  
-├── README.md                  # 项目总说明（当前文件）  
-└── LICENSE                    # 开源许可证  
+├── 1.0/ ------------ # Python 命令行版  
+├── 2.0/ ------------ # Tkinter 桌面版  
+├── README.md ------- # 项目总说明（当前文件）  
+└── LICENSE --------- # 开源许可证  
 
 ## 📄 许可证
 本项目采用 MIT License 开源协议，允许自由使用、修改和分发，但需保留版权声明。此外，本项目仅供学习和交流使用，禁止用于商业用途。
@@ -90,4 +90,4 @@ CheckUpdate_for_HONOR_MagicBook/
 - 如果官网页面结构变化，可能会导致检测失败，请 QQ 联系 HUANCHUAN 做适配处理
 - .exe 文件可能会被杀毒软件误报，请自行判断是否信任
 - 若提示以下内容，点击**更多信息 > 仍要运行**即可  
-<img width="545" height="510" alt="Windows 已保护你的电脑" src="https://github.com/user-attachments/assets/8f98381d-959c-46ef-aaa7-371ba1400945" />
+<img width="436" height="408" alt="Windows 已保护你的电脑" src="https://github.com/user-attachments/assets/8f98381d-959c-46ef-aaa7-371ba1400945" />
