@@ -26,24 +26,24 @@
 ---
 
 ## 🖼 使用示例
-<img width="371" height="639.5" alt="image" src="https://github.com/user-attachments/assets/67a7cf52-466d-4747-bed5-4962e413356f" />
+<img width="371" height="639.5" alt="image" src="https://github.com/user-attachments/assets/67a7cf52-466d-4747-bed5-4962e413356f" />  
 
-<img width="256" height="256" alt="pc_manager" src="https://github.com/user-attachments/assets/10ee0a39-c3e8-4c9e-b431-a4ab9dfadafb" />
-当前版本：20.0.0.31(SP5C233)   
+<img width="64" height="64" alt="pc_manager" src="https://github.com/user-attachments/assets/10ee0a39-c3e8-4c9e-b431-a4ab9dfadafb" />  
+当前版本：20.0.0.31(SP5C233)  
 官网版本：20.0.0.31 (SP5)  
 ✅已是最新版本  
 
-<img width="256" height="256" alt="honor_workstation" src="https://github.com/user-attachments/assets/c818ea1d-6e99-4ff4-b9ad-49c8978c7f55" />
-当前版本：5.5.1.42(SP4)   
+<img width="64" height="64" alt="honor_workstation" src="https://github.com/user-attachments/assets/c818ea1d-6e99-4ff4-b9ad-49c8978c7f55" />  
+当前版本：5.5.1.42(SP4)  
 官网版本：5.5.1.48  
 ⚠️ 荣耀超级工作台 有新版本！ 5.5.1.42(SP4) -> 5.5.1.48  
-[下载链接](https://www.honor.com/cn/tech/honor-workstation/)
+[下载链接](https://www.honor.com/cn/tech/honor-workstation/)  
 
-<img width="256" height="256" alt="yoyo_assistant" src="https://github.com/user-attachments/assets/602c3da6-2e92-4f74-a049-27fd262cb91e" />
+<img width="64" height="64" alt="yoyo_assistant" src="https://github.com/user-attachments/assets/602c3da6-2e92-4f74-a049-27fd262cb91e" />  
 当前版本：10.0.1.16(SP2)   
 官网版本：9.0.2.42 (SP10)  
 ℹ️当前版本高于官网版本，或为测试版  
-[官网链接](https://www.honor.com/cn/tech/pc-yoyo-assistant-2/)
+[官网链接](https://www.honor.com/cn/tech/pc-yoyo-assistant-2/)  
 
 ---
 
