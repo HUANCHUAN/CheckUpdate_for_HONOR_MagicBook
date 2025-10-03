@@ -1,4 +1,4 @@
-# CheckUpdate_for_HONOR_MagicBook 3.0.0
+# CheckUpdate_for_HONOR_MagicBook 3.0.0 （注：此版本暂时不考虑开源）
 
 ## 📌 简介
 这是一个基于 **Python + PySide6** 框架开发的 Windows 桌面工具，用于检测部分新款 HONOR MagicBook 中预装的以下三款应用的更新情况：
