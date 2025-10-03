@@ -26,8 +26,7 @@
 ---
 
 ## 🖼 使用示例
-<img width="371" height="639.5" alt="image" src="https://github.com/user-attachments/assets/67a7cf52-466d-4747-bed5-4962e413356f"/>  
-  
+
 <img width="64" height="64" alt="pc_manager" src="https://github.com/user-attachments/assets/10ee0a39-c3e8-4c9e-b431-a4ab9dfadafb" />  
 
 当前版本：20.0.0.31(SP5C233)  
@@ -47,6 +46,8 @@
 官网版本：9.0.2.42 (SP10)  
 ℹ️当前版本高于官网版本，或为测试版  
 [官网链接](https://www.honor.com/cn/tech/pc-yoyo-assistant-2/)  
+
+<img width="371" height="639.5" alt="image" src="https://github.com/user-attachments/assets/67a7cf52-466d-4747-bed5-4962e413356f"/>  
 
 ---
 
