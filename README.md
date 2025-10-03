@@ -103,6 +103,7 @@
 CheckUpdate_for_HONOR_MagicBook/  
 ├── 1.0/ ------------ # Python 命令行版  
 ├── 2.0/ ------------ # Tkinter 桌面版  
+├── 3.0/ ------------ # PySide6 桌面版  
 ├── README.md ------- # 项目总说明（当前文件）  
 └── LICENSE --------- # 开源许可证  
 
