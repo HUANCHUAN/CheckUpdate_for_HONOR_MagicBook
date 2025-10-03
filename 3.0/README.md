@@ -26,7 +26,7 @@
 ---
 
 ## 🖼 使用示例
-🔛 程序开始运行啦！  
+<img width="366" height="633" alt="image" src="https://github.com/user-attachments/assets/e892e22f-8d68-4d81-ad0b-fd21a482efde" />
 
 [pc_manager] 本地版本：20.0.0.31(SP5C233) 官网版本：20.0.0.31 (SP5)  
 ✅ 荣耀电脑管家 已是最新版本  
