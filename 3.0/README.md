@@ -26,7 +26,8 @@
 ---
 
 ## 🖼 使用示例
-<img width="366" height="633" alt="image" src="https://github.com/user-attachments/assets/e892e22f-8d68-4d81-ad0b-fd21a482efde" />
+<img width="371" height="639.5" alt="image" src="https://github.com/user-attachments/assets/67a7cf52-466d-4747-bed5-4962e413356f" />
+
 
 [pc_manager] 本地版本：20.0.0.31(SP5C233) 官网版本：20.0.0.31 (SP5)  
 ✅ 荣耀电脑管家 已是最新版本  
