@@ -78,12 +78,14 @@
 **3.0：**
 
 <img width="64" height="64" alt="pc_manager" src="https://github.com/user-attachments/assets/10ee0a39-c3e8-4c9e-b431-a4ab9dfadafb" />  
+
 荣耀电脑管家  
 当前版本：20.0.0.31(SP5C233)  
 官网版本：20.0.0.31 (SP5)  
 ✅已是最新版本  
 
 <img width="64" height="64" alt="honor_workstation" src="https://github.com/user-attachments/assets/c818ea1d-6e99-4ff4-b9ad-49c8978c7f55"/>  
+
 荣耀超级工作台  
 当前版本：5.5.1.42(SP4)  
 官网版本：5.5.1.48  
@@ -91,6 +93,7 @@
 [下载链接](https://www.honor.com/cn/tech/honor-workstation/)  
 
 <img width="64" height="64" alt="yoyo_assistant" src="https://github.com/user-attachments/assets/602c3da6-2e92-4f74-a049-27fd262cb91e"/>  
+
 荣耀 YOYO 助理  
 当前版本：10.0.1.16(SP2)   
 官网版本：9.0.2.42 (SP10)  
