@@ -20,14 +20,15 @@
 
 ## 📥 下载与运行
 1. 前往 Release 页面下载最新的压缩包，在10.0的文件夹中有 `HonorUpdateChecker 10_Setup.exe` 文件
-2. 双击运行即可（无需额外安装 Python）
+2. 双击运行即可（无需额外安装 Python，同时提供 .py 文件可以参考交流）
 3. 如果运行提示缺少运行库，请安装 [Microsoft Visual C++ Redistributable](https://learn.microsoft.com/zh-cn/cpp/windows/latest-supported-vc-redist)
 
 ---
 
 ## 🖼 使用示例
 
-（缺少图片）
+<img width="439" height="724.5" alt="屏幕截图 2025-10-14 232004" src="https://github.com/user-attachments/assets/327a42d6-b6de-4c41-9c5b-81a46cfd1bc6" />  
+
 
 ---
 
