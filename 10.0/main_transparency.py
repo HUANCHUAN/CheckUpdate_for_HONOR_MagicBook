@@ -1,4 +1,5 @@
 # HUANCHUAN with Copilot by Trae  版本号：10.0.0
+
 import json
 import subprocess
 import sys
@@ -1758,4 +1759,5 @@ if __name__ == "__main__":
     
     w = GlassWindow()
     w.show()
+
     sys.exit(app.exec())
