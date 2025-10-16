@@ -1,3 +1,5 @@
+# HUANCHUAN with Copilot by Trae  版本号：10.0.0
+
 import sys, os, json
 import certifi
 from PySide6 import QtCore
@@ -60,4 +62,5 @@ def main():
     sys.exit(app.exec())
 
 if __name__ == "__main__":
+
     main()
