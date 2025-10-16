@@ -1,4 +1,4 @@
-# CheckUpdate_for_HONOR_MagicBook 3.0.0 - 3.1.0 （注：此版本暂时不考虑开源）
+# CheckUpdate_for_HONOR_MagicBook 3.0.0 - 3.1.0
 
 ## 📌 简介
 这是一个基于 **Python + PySide6** 框架开发的 Windows 桌面工具，用于检测部分新款 HONOR MagicBook 中预装的以下三款应用的更新情况：
@@ -20,7 +20,7 @@
 
 ## 📥 下载与运行
 1. 前往 Release 页面下载最新的压缩包，在3.0的文件夹中有 `CheckUpdate_for_HONOR_MagicBook 3.0.0.exe` 文件
-2. 双击运行即可（无需额外安装 Python）
+2. 双击运行即可（无需额外安装 Python，同时提供 .py 文件供交流）
 3. 如果运行提示缺少运行库，请安装 [Microsoft Visual C++ Redistributable](https://learn.microsoft.com/zh-cn/cpp/windows/latest-supported-vc-redist)
 
 ---
@@ -63,4 +63,4 @@
 ---
 
 ## 📄 许可证
-本工具仅供学习和交流使用，禁止用于商业用途。
+本工具仅供学习和交流使用，禁止用于商业用途。严禁非法使用。
