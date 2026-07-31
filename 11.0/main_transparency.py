@@ -30,13 +30,15 @@ from PySide6.QtWidgets import (
     QApplication, QWidget, QVBoxLayout, QHBoxLayout, QGridLayout,
     QPushButton, QLabel, QFrame, QDialog,
     QScrollArea, QProgressBar, QMessageBox, QToolButton,
-    QGraphicsDropShadowEffect, QStyle, QLineEdit, QMenu
+    QGraphicsDropShadowEffect, QStyle, QLineEdit, QMenu, QSizePolicy
 )
 from BlurWindow.blurWindow import GlobalBlur
 
+from update_checker import check_for_update, UpdateAvailableDialog
+
 # ===== 常量定义 =====
 APP_NAME = "荣耀软件更新检查器"
-APP_VERSION = "11.0.0.16"
+APP_VERSION = "11.0.0.20"
 COPYRIGHT_YEAR = f"2025-{datetime.now().year}"
 
 # 应用名称映射
@@ -179,15 +181,11 @@ def format_version_display(version_text: str) -> str:
     
     main_version = main_match.group(0)
     
-    # 优先提取 SP 补丁版本（兼容括号内前缀，如 C233SP2）
+    # 提取 SP 补丁版本（兼容括号内前缀，如 C233SP2）
+    # 仅当括号内明确包含 SP 标识时才显示补丁号，避免将 C233 等版本编号误判为 SP 补丁号
     sp_match = re.search(r'\([^)]*SP\s*(\d+)[^)]*\)', text, re.IGNORECASE)
     if sp_match:
         return f"{main_version} (SP{sp_match.group(1)})"
-    
-    # 提取其他括号内的补丁标识（如 C233 -> SP233）
-    patch_match = re.search(r'\([A-Za-z]*(\d+)[^)]*\)', text)
-    if patch_match:
-        return f"{main_version} (SP{patch_match.group(1)})"
     
     return main_version
 
@@ -346,6 +344,7 @@ class WorkerBridge(QObject):
     update_result = Signal(str, dict)
     check_complete = Signal()
     show_message = Signal(str, str, int)
+    show_self_update = Signal(dict)
 
 # ===== 可复制标签（中文右键菜单）=====
 class CopyableLabel(QLabel):
@@ -428,6 +427,10 @@ class SoftwareCard(QFrame):
         # 设置卡片样式 - 通透模式专用
         self.setObjectName("SoftwareCard")
         self.setStyleSheet("QFrame#SoftwareCard { margin: 8px; }")
+
+        # 设置尺寸策略为水平扩展，确保双列布局中卡片始终填满列宽，
+        # 避免逐个加载卡片时因可见卡片数量变化导致的位置抖动
+        self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
 
         # 添加阴影效果
         shadow = QGraphicsDropShadowEffect(self)
@@ -759,7 +762,7 @@ class AboutDialog(QDialog):
         super().__init__(parent)
         self.setWindowTitle("关于荣耀软件更新检查器")
         self.setModal(True)
-        self.setFixedSize(340, 240)
+        self.setFixedSize(340, 290)
         self.parent_window = parent
         # 初始化点击计数器
         self.click_count = 0
@@ -805,11 +808,18 @@ class AboutDialog(QDialog):
         # 反馈信息
         self.feedback_label = QLabel("反馈/建议：请使用 QQ 联系 HUANCHUAN")
         self.feedback_label.setAlignment(Qt.AlignCenter)
-        
+
+        # 检查更新按钮
+        self.check_update_button = QPushButton("检查更新")
+        self.check_update_button.setCursor(Qt.PointingHandCursor)
+        self.check_update_button.setFixedHeight(32)
+        self.check_update_button.clicked.connect(self.on_check_update_clicked)
+
         # 添加到布局
         self.main_layout.addWidget(self.icon_label)
         self.main_layout.addWidget(self.title_label)
         self.main_layout.addWidget(self.version_label)
+        self.main_layout.addWidget(self.check_update_button)
         self.main_layout.addWidget(self.copyright_label)
         self.main_layout.addWidget(self.feedback_label)
     
@@ -875,6 +885,21 @@ class AboutDialog(QDialog):
                     font-size: 14px;
                     color: #4285f4;
                 }
+                QPushButton {
+                    background-color: #3773e8;
+                    color: white;
+                    border: none;
+                    border-radius: 6px;
+                    padding: 0 16px;
+                    font-size: 13px;
+                }
+                QPushButton:hover {
+                    background-color: #4285f4;
+                }
+                QPushButton:disabled {
+                    background-color: #404040;
+                    color: #6c757d;
+                }
             """)
             # 设置标题栏颜色为深色主题背景色
             self.set_windows_title_bar_color("#2d2d2d")
@@ -898,6 +923,21 @@ class AboutDialog(QDialog):
                     font-size: 14px;
                     color: #4285f4;
                 }
+                QPushButton {
+                    background-color: #3773e8;
+                    color: white;
+                    border: none;
+                    border-radius: 6px;
+                    padding: 0 16px;
+                    font-size: 13px;
+                }
+                QPushButton:hover {
+                    background-color: #4285f4;
+                }
+                QPushButton:disabled {
+                    background-color: #adb5bd;
+                    color: #6c757d;
+                }
             """)
             # 设置标题栏颜色为浅色主题背景色
             self.set_windows_title_bar_color("#f3f3f3")
@@ -916,7 +956,19 @@ class AboutDialog(QDialog):
     def open_version_edit_dialog(self):
         """打开版本修改对话框"""
         if hasattr(self.parent_window, 'open_manual_version_dialog'):
-            self.parent_window.open_manual_version_dialog()
+            result = self.parent_window.open_manual_version_dialog()
+            # 保存成功后关闭关于对话框
+            if result == QDialog.Accepted:
+                self.accept()
+
+    def on_check_update_clicked(self):
+        """检查更新按钮点击事件"""
+        if hasattr(self.parent_window, 'manual_check_self_update'):
+            # 禁用按钮并显示检查中状态
+            self.check_update_button.setEnabled(False)
+            self.check_update_button.setText("检查中...")
+            # 调用主窗口的检查方法，传入自身引用以便检查完成后关闭
+            self.parent_window.manual_check_self_update(self)
 
 # ===== 手动版本修改对话框 =====
 class ManualVersionDialog(QDialog):
@@ -1246,9 +1298,13 @@ class GlassWindow(QWidget):
         self.worker_bridge.update_result.connect(self.update_card_result)
         self.worker_bridge.check_complete.connect(self.on_check_complete)
         self.worker_bridge.show_message.connect(self.show_message)
-        
+        self.worker_bridge.show_self_update.connect(self.on_self_update_result)
+
         # 自动开始检查更新
         self.run_check()
+
+        # 启动后延迟 3 秒静默检查应用自身更新（每天最多一次）
+        QTimer.singleShot(3000, self.auto_check_self_update)
         
         # 设置窗口标题栏颜色为指定颜色
         # 从窗口左侧1像素从客户区顶部下1像素的位置取色
@@ -1473,6 +1529,11 @@ class GlassWindow(QWidget):
             self.cards_layout.setSpacing(8)
             self.cards_layout.setColumnStretch(0, 1)
             self.cards_layout.setColumnStretch(1, 1)
+            # 设置两列最小宽度相同，避免卡片逐个显示时因可见卡片数量变化
+            # 导致某列最小宽度为0而引发列宽重算和卡片位置抖动
+            # 双列布局最小窗口宽度620px，减去边距和间距后每列约302px，取280px为安全下限
+            self.cards_layout.setColumnMinimumWidth(0, 280)
+            self.cards_layout.setColumnMinimumWidth(1, 280)
             for index, key in enumerate(service_names.keys()):
                 row = index // 2
                 col = index % 2
@@ -1662,10 +1723,15 @@ class GlassWindow(QWidget):
         dialog.exec()
         
     def open_manual_version_dialog(self):
-        """打开手动版本修改对话框"""
+        """打开手动版本修改对话框
+
+        返回:
+            QDialog.Accepted 或 QDialog.Rejected，供调用方（如关于对话框）
+            判断是否需要在保存成功后关闭自身
+        """
         # 获取当前卡片中的版本号作为初始值
         current_versions = {}
-        
+
         # 检查是否已经有手动设置的版本号
         if self.manual_versions:
             current_versions = self.manual_versions
@@ -1676,26 +1742,119 @@ class GlassWindow(QWidget):
                     card = self.software_cards[app_key]
                     raw_version = getattr(card, 'raw_local_version', '')
                     current_versions[app_key] = raw_version if raw_version else card.local_version_value.text()
-        
+
         # 创建并显示对话框
         dialog = ManualVersionDialog(self, current_versions)
-        
-        if dialog.exec() == QDialog.Accepted:
+
+        result = dialog.exec()
+        if result == QDialog.Accepted:
             # 保存用户输入的版本号
             self.manual_versions = dialog.get_versions()
-            
+
             # 自动开始检查更新
             self.run_check()
+        return result
     
     def on_check_complete(self):
         """检查完成后的处理"""
         self.running = False
         self.check_button.setEnabled(True)
         self.check_button.setText("检查更新")
-        
+
         # 隐藏进度条
         self.progress_frame.setVisible(False)
-    
+
+    # ===== 应用自身更新检查 =====
+    def _read_config(self) -> dict:
+        """读取 config.json"""
+        try:
+            config_path = get_config_path()
+            if os.path.exists(config_path):
+                with open(config_path, 'r', encoding='utf-8') as config_file:
+                    return json.load(config_file)
+        except Exception:
+            pass
+        return {}
+
+    def _save_config(self, updates: dict):
+        """合并写入 config.json（保留现有字段）"""
+        try:
+            config_path = get_config_path()
+            os.makedirs(os.path.dirname(config_path), exist_ok=True)
+            config_data = {}
+            if os.path.exists(config_path):
+                with open(config_path, 'r', encoding='utf-8') as config_file:
+                    config_data = json.load(config_file)
+            config_data.update(updates)
+            config_data['last_updated'] = datetime.now().isoformat()
+            with open(config_path, 'w', encoding='utf-8') as config_file:
+                json.dump(config_data, config_file, ensure_ascii=False, indent=2)
+        except Exception:
+            pass
+
+    def auto_check_self_update(self):
+        """启动时静默检查应用自身更新（每天最多一次）"""
+        config_data = self._read_config()
+        last_check_date = config_data.get("last_self_check_date", "")
+        today = datetime.now().strftime("%Y-%m-%d")
+        if last_check_date == today:
+            return
+        # 记录今天已检查
+        self._save_config({"last_self_check_date": today})
+        # 后台线程执行检查
+        threading.Thread(target=self._self_update_task, args=(False,), daemon=True).start()
+
+    def manual_check_self_update(self, about_dialog=None):
+        """关于对话框中手动触发检查（忽略每日一次限制）
+
+        参数:
+            about_dialog: 调用此方法的关于对话框引用，检查完成后会关闭它
+        """
+        self._pending_about_dialog = about_dialog
+        threading.Thread(target=self._self_update_task, args=(True,), daemon=True).start()
+
+    def _self_update_task(self, is_manual: bool):
+        """后台检查应用自身更新的线程任务"""
+        result = check_for_update(APP_VERSION)
+        # 标记本次检查是否为手动触发（供 UI 侧决定是否弹出"已是最新版本"提示）
+        result["is_manual"] = is_manual
+        # 通过信号回 UI 线程
+        self.worker_bridge.show_self_update.emit(result)
+
+    def on_self_update_result(self, result: dict):
+        """处理自身更新检查结果"""
+        is_manual = result.get("is_manual", False)
+
+        # 若来自手动检查，先关闭关于对话框
+        if is_manual and hasattr(self, "_pending_about_dialog") and self._pending_about_dialog is not None:
+            try:
+                self._pending_about_dialog.reject()
+            except Exception:
+                pass
+            self._pending_about_dialog = None
+
+        if result.get("error"):
+            # 仅手动检查时提示错误，自动检查静默忽略
+            if is_manual:
+                self.show_message("检查更新", result["error"], QMessageBox.Warning)
+            return
+
+        if result.get("has_update"):
+            icon_path = resource_path("resources/icon.png")
+            dialog = UpdateAvailableDialog(
+                self, result, APP_VERSION,
+                self.theme_manager, icon_path
+            )
+            dialog.exec()
+        else:
+            # 无更新：自动检查静默，仅手动检查时提示"已是最新版本"
+            if is_manual:
+                self.show_message(
+                    "检查更新",
+                    f"当前已是最新版本（{APP_VERSION}）",
+                    QMessageBox.Information
+                )
+
     def show_message(self, title: str, message: str, icon_type: int):
         """显示消息对话框 - 适配深色/浅色主题"""
         msg_box = QMessageBox(self)
