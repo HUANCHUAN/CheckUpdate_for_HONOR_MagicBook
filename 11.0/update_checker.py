@@ -1,8 +1,11 @@
 # update_checker.py
 # 应用自身更新检查模块
-# 通过 GitHub 仓库托管的 version.json + jsDelivr CDN 加速获取最新版本信息
+# 通过 GitHub 仓库托管的 version.json 获取最新版本信息
+# 优先直连 raw.githubusercontent.com（实时同步，无长缓存），
+# jsDelivr CDN 作为国内网络不佳时的回退
 import os
 import json
+import time
 import ctypes
 from ctypes import wintypes
 from datetime import datetime
@@ -22,11 +25,21 @@ from PySide6.QtWidgets import (
 )
 
 # ===== 配置（GitHub 仓库地址）=====
-# jsDelivr CDN 主地址（国内有节点，无限流）
-UPDATE_CHECK_URL = "https://cdn.jsdelivr.net/gh/HUANCHUAN/CheckUpdate_for_HONOR_MagicBook@main/version.json"
-# 备用直连 GitHub 地址（jsDelivr 故障时回退）
-UPDATE_CHECK_URL_FALLBACK = "https://raw.githubusercontent.com/HUANCHUAN/CheckUpdate_for_HONOR_MagicBook/main/version.json"
+# 主地址：直连 GitHub raw（实时同步仓库内容，无长缓存问题）
+UPDATE_CHECK_URL = "https://raw.githubusercontent.com/HUANCHUAN/CheckUpdate_for_HONOR_MagicBook/main/version.json"
+# 备用地址：jsDelivr CDN（国内有节点，但分支引用缓存更新较慢，作为回退）
+UPDATE_CHECK_URL_FALLBACK = "https://cdn.jsdelivr.net/gh/HUANCHUAN/CheckUpdate_for_HONOR_MagicBook@main/version.json"
 REQUEST_TIMEOUT = 10  # 秒
+
+
+def _build_cache_busting_url(base_url: str) -> str:
+    """为 URL 添加时间戳查询参数，避免任何中间层（代理、CDN）缓存。
+
+    raw.githubusercontent.com 本身实时返回仓库内容，但用户所在网络
+    可能有透明代理缓存，加时间戳可彻底绕过。
+    """
+    separator = "&" if "?" in base_url else "?"
+    return f"{base_url}{separator}_t={int(time.time())}"
 
 
 # ===== 版本比较工具 =====
@@ -73,11 +86,14 @@ def compare_versions(current: str, latest: str) -> int:
 def fetch_latest_version() -> Optional[Dict]:
     """拉取远程 version.json。
 
-    优先使用 jsDelivr CDN，失败则回退到 raw.githubusercontent.com。
+    优先直连 raw.githubusercontent.com（实时同步仓库内容），
+    失败则回退到 jsDelivr CDN（国内网络不佳时使用）。
+    所有请求添加时间戳查询参数，避免中间代理/CDN缓存。
     返回解析后的 dict，或 None（全部失败时）。
     """
-    for url in (UPDATE_CHECK_URL, UPDATE_CHECK_URL_FALLBACK):
+    for base_url in (UPDATE_CHECK_URL, UPDATE_CHECK_URL_FALLBACK):
         try:
+            url = _build_cache_busting_url(base_url)
             response = requests.get(url, timeout=REQUEST_TIMEOUT)
             response.raise_for_status()
             data = response.json()

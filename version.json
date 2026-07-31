@@ -1,6 +1,6 @@
 {
-  "version": "11.0.0.22",
+  "version": "11.0.0.20",
   "release_date": "2026-07-31",
-  "release_notes": "此版本日志为测试【新增】应用内检查更新功能，启动时自动检查并支持手动检查\n【新增】发现新版本时自动弹窗展示更新日志，一键跳转下载页面\n【新增】调试页面保存后自动关闭关于页面\n【优化】双列布局卡片位置稳定性\n【优化】通过 GitHub + jsDelivr CDN 分发版本信息，获取新版本信息更稳定",
+  "release_notes": "【新增】应用内检查更新功能，启动时自动检查并支持手动检查\n【新增】发现新版本时弹窗展示更新日志，一键跳转下载页面\n【新增】调试页面保存后自动关闭关于页面\n【优化】双列布局卡片位置稳定性，避免逐个加载时的位置抖动\n【优化】双列布局禁用垂直滚动条，所有内容可完整显示\n【优化】通过 GitHub + jsDelivr CDN 分发版本信息，无需服务器",
   "download_url": "https://github.com/HUANCHUAN/CheckUpdate_for_HONOR_MagicBook/releases/latest"
 }
