@@ -37,7 +37,7 @@ from update_checker import check_for_update, UpdateAvailableDialog
 
 # ===== 常量定义 =====
 APP_NAME = "荣耀软件更新检查器"
-APP_VERSION = "11.0.0.20"
+APP_VERSION = "11.0.0.21"
 COPYRIGHT_YEAR = f"2025-{datetime.now().year}"
 
 # 应用名称映射
