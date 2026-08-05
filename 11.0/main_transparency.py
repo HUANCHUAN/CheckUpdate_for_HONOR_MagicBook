@@ -1,4 +1,4 @@
-# HUANCHUAN with Copilot by Trae  版本号：11.0.0.16
+# HUANCHUAN with Copilot by Trae  版本号：11.0.0.22
 import json
 import subprocess
 import sys
@@ -38,7 +38,7 @@ from update_checker import check_for_update, UpdateAvailableDialog
 
 # ===== 常量定义 =====
 APP_NAME = "荣耀软件更新检查器"
-APP_VERSION = "11.0.0.21"
+APP_VERSION = "11.0.0.22"
 COPYRIGHT_YEAR = f"2025-{datetime.now().year}"
 
 # 应用名称映射
@@ -186,8 +186,19 @@ def format_version_display(version_text: str) -> str:
     sp_match = re.search(r'\([^)]*SP\s*(\d+)[^)]*\)', text, re.IGNORECASE)
     if sp_match:
         return f"{main_version} (SP{sp_match.group(1)})"
-    
+
     return main_version
+
+def get_network_error_message(error: Exception) -> str:
+    """将网络请求异常转换为中文提示信息，避免向前端展示英文错误"""
+    if isinstance(error, requests.exceptions.Timeout):
+        return "检查失败: 请求超时，请检查网络连接"
+    if isinstance(error, requests.exceptions.ConnectionError):
+        return "检查失败: 网络连接错误，请检查网络是否正常"
+    if isinstance(error, requests.exceptions.HTTPError):
+        status_code = error.response.status_code if error.response is not None else "?"
+        return f"检查失败: 服务器错误({status_code})"
+    return f"检查失败: {str(error)[:30]}..."
 
 def resource_path(relative_path: str) -> str:
     """获取资源文件的绝对路径（兼容PyInstaller打包后）"""
@@ -2235,7 +2246,7 @@ class GlassWindow(QWidget):
                 self.worker_bridge.update_result.emit(key, {
                     "local_version": installed_versions.get(key, ""),
                     "online_version": "获取失败",
-                    "status": f"检查失败: {str(e)[:30]}...",
+                    "status": get_network_error_message(e),
                     "status_type": "error",
                     "download_url": website_config.get(key, {}).get("url", "")
                 })

@@ -1,6 +1,6 @@
 {
-  "version": "11.0.0.21",
-  "release_date": "2026-07-31",
-  "release_notes": "【新增】应用内检查更新功能，启动时自动检查并支持手动检查\n【新增】发现新版本时弹窗展示更新日志，一键跳转下载页面\n【新增】调试页面保存后自动关闭关于页面\n【优化】双列布局卡片位置稳定性，避免逐个加载时的位置抖动\n【优化】双列布局禁用垂直滚动条，所有内容可完整显示\n【优化】通过 GitHub + jsDelivr CDN 分发版本信息，无需服务器\n【修复】CDN 缓存导致检查更新失效问题，优先直连 GitHub 确保版本信息实时性",
+  "version": "11.0.0.22",
+  "release_date": "2026-08-05",
+  "release_notes": "【新增】网络请求异常时显示中文错误提示，避免向前端展示英文错误\n【优化】SP 补丁号提取逻辑，仅当括号内明确包含 SP 标识时才显示补丁号，避免将 C233 等版本编号误判为 SP 补丁号",
   "download_url": "https://github.com/HUANCHUAN/CheckUpdate_for_HONOR_MagicBook/releases/latest"
 }
