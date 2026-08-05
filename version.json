@@ -1,6 +1,6 @@
 {
   "version": "11.0.0.22",
   "release_date": "2026-08-05",
-  "release_notes": "【新增】网络请求异常时显示中文错误提示，避免向前端展示英文错误\n【优化】SP 补丁号提取逻辑，仅当括号内明确包含 SP 标识时才显示补丁号，避免将 C233 等版本编号误判为 SP 补丁号",
-  "download_url": "https://github.com/HUANCHUAN/CheckUpdate_for_HONOR_MagicBook/releases/latest"
+  "release_notes": "【新增】网络请求异常时显示中文错误提示，避免向前端展示英文错误；\n【修复】修复普通模式下的 SP 补丁号提取逻辑，仅当括号内明确包含 SP 标识时才显示补丁号，避免将 C233 等版本编号误判为 SP 补丁号（通透模式不存在此问题）\n\n此版本为优化和修复问题推荐更新～",
+  "download_url": "https://gitee.com/CNHUANCHUAN/CheckUpdate_for_HONOR_MagicBook/releases/download/11.0.0.22/HonorUpdateChecker%2011_Setup.exe"
 }
