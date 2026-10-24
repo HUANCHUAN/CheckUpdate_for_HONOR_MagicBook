@@ -38,7 +38,7 @@ from update_checker import check_for_update, UpdateAvailableDialog
 
 # ===== 常量定义 =====
 APP_NAME = "荣耀软件更新检查器"
-APP_VERSION = "11.0.0.22"
+APP_VERSION = "11.0.0.23"
 COPYRIGHT_YEAR = f"2025-{datetime.now().year}"
 
 # 应用名称映射
@@ -707,6 +707,7 @@ class SoftwareCard(QFrame):
             """)
             if download_url:
                 self.download_button.setVisible(True)
+                self.download_button.setText("更新链接")
                 self.download_button.setStyleSheet(f"""
                     QPushButton {{
                         background-color: rgba(55, 115, 232, 0.8);
@@ -733,6 +734,37 @@ class SoftwareCard(QFrame):
                 }}
             """)
             self.download_button.setVisible(False)
+        elif status_type == "not_installed":
+            # 未检测到本地安装（未获取到本地版本），仍提供官网下载入口
+            self.status_label.setStyleSheet(f"""
+                QLabel#StatusLabel {{
+                    background-color: rgba(45, 54, 62, 0.8);
+                    color: rgba(119, 191, 249, 1);
+                    padding: {status_padding};
+                    border-radius: {status_radius};
+                    font-size: {status_font_size};
+                    font-weight: 500;
+                }}
+            """)
+            if download_url:
+                self.download_button.setVisible(True)
+                self.download_button.setText("前往下载")
+                self.download_button.setStyleSheet(f"""
+                    QPushButton {{
+                        background-color: rgba(55, 115, 232, 0.8);
+                        color: white;
+                        border: none;
+                        border-radius: {button_radius};
+                        padding: {button_padding};
+                        font-size: {button_font_size};
+                    }}
+                    QPushButton:hover {{
+                        background-color: rgba(66, 133, 244, 1);
+                    }}
+                """)
+                self.download_button.clicked.connect(lambda: QDesktopServices.openUrl(QUrl(download_url)))
+            else:
+                self.download_button.setVisible(False)
         elif status_type == "higher_version":
             self.status_label.setStyleSheet(f"""
                 QLabel#StatusLabel {{
@@ -1251,6 +1283,14 @@ class GlassWindow(QWidget):
         self.running = False
         self.manual_versions = {}
 
+        # 弹窗互斥状态：避免快速重复点击时打开多个相同的弹窗
+        self._about_dialog = None
+        self._manual_version_dialog = None
+        self._update_available_dialog = None
+        self._message_box = None
+        self._pending_about_dialog = None
+        self._self_update_checking = False
+
         # 加载卡片布局配置（classic 原版单列 / compact 新版双列）
         self.card_layout_mode = "compact"
         try:
@@ -1382,7 +1422,7 @@ class GlassWindow(QWidget):
         # 卡片布局切换按钮
         self.layout_switch_button = QToolButton()
         self.layout_switch_button.setIcon(self.style().standardIcon(QStyle.SP_FileDialogListView))
-        self.layout_switch_button.setToolTip("切换卡片布局（）")
+        self.layout_switch_button.setToolTip("切换卡片布局")
         self.layout_switch_button.setFixedSize(32, 32)
         self.layout_switch_button.setStyleSheet("""
             QToolButton {
@@ -1730,8 +1770,18 @@ class GlassWindow(QWidget):
     
     def open_about(self):
         """打开关于对话框"""
+        # 已存在可见的关于对话框时直接聚焦，避免打开多个弹窗
+        if self._about_dialog is not None and self._about_dialog.isVisible():
+            self._about_dialog.raise_()
+            self._about_dialog.activateWindow()
+            return
+
         dialog = AboutDialog(self)
-        dialog.exec()
+        self._about_dialog = dialog
+        try:
+            dialog.exec()
+        finally:
+            self._about_dialog = None
         
     def open_manual_version_dialog(self):
         """打开手动版本修改对话框
@@ -1740,6 +1790,12 @@ class GlassWindow(QWidget):
             QDialog.Accepted 或 QDialog.Rejected，供调用方（如关于对话框）
             判断是否需要在保存成功后关闭自身
         """
+        # 已存在可见的手动版本对话框时直接聚焦，避免打开多个弹窗
+        if self._manual_version_dialog is not None and self._manual_version_dialog.isVisible():
+            self._manual_version_dialog.raise_()
+            self._manual_version_dialog.activateWindow()
+            return QDialog.Rejected
+
         # 获取当前卡片中的版本号作为初始值
         current_versions = {}
 
@@ -1757,7 +1813,11 @@ class GlassWindow(QWidget):
         # 创建并显示对话框
         dialog = ManualVersionDialog(self, current_versions)
 
-        result = dialog.exec()
+        self._manual_version_dialog = dialog
+        try:
+            result = dialog.exec()
+        finally:
+            self._manual_version_dialog = None
         if result == QDialog.Accepted:
             # 保存用户输入的版本号
             self.manual_versions = dialog.get_versions()
@@ -1810,8 +1870,12 @@ class GlassWindow(QWidget):
         today = datetime.now().strftime("%Y-%m-%d")
         if last_check_date == today:
             return
+        # 已有检查在进行中时不再重复发起
+        if self._self_update_checking:
+            return
         # 记录今天已检查
         self._save_config({"last_self_check_date": today})
+        self._self_update_checking = True
         # 后台线程执行检查
         threading.Thread(target=self._self_update_task, args=(False,), daemon=True).start()
 
@@ -1821,6 +1885,10 @@ class GlassWindow(QWidget):
         参数:
             about_dialog: 调用此方法的关于对话框引用，检查完成后会关闭它
         """
+        # 已有检查在进行中时忽略重复触发，避免弹出多个结果弹窗
+        if self._self_update_checking:
+            return
+        self._self_update_checking = True
         self._pending_about_dialog = about_dialog
         threading.Thread(target=self._self_update_task, args=(True,), daemon=True).start()
 
@@ -1834,6 +1902,7 @@ class GlassWindow(QWidget):
 
     def on_self_update_result(self, result: dict):
         """处理自身更新检查结果"""
+        self._self_update_checking = False
         is_manual = result.get("is_manual", False)
 
         # 若来自手动检查，先关闭关于对话框
@@ -1851,12 +1920,22 @@ class GlassWindow(QWidget):
             return
 
         if result.get("has_update"):
+            # 已存在可见的更新对话框时直接聚焦，避免重复弹窗
+            if self._update_available_dialog is not None and self._update_available_dialog.isVisible():
+                self._update_available_dialog.raise_()
+                self._update_available_dialog.activateWindow()
+                return
+
             icon_path = resource_path("resources/icon.png")
             dialog = UpdateAvailableDialog(
                 self, result, APP_VERSION,
                 self.theme_manager, icon_path
             )
-            dialog.exec()
+            self._update_available_dialog = dialog
+            try:
+                dialog.exec()
+            finally:
+                self._update_available_dialog = None
         else:
             # 无更新：自动检查静默，仅手动检查时提示"已是最新版本"
             if is_manual:
@@ -1868,6 +1947,12 @@ class GlassWindow(QWidget):
 
     def show_message(self, title: str, message: str, icon_type: int):
         """显示消息对话框 - 适配深色/浅色主题"""
+        # 已存在可见的消息框时直接聚焦，避免打开多个弹窗
+        if self._message_box is not None and self._message_box.isVisible():
+            self._message_box.raise_()
+            self._message_box.activateWindow()
+            return
+
         msg_box = QMessageBox(self)
         msg_box.setWindowTitle(title)
         msg_box.setText(message)
@@ -2202,8 +2287,8 @@ class GlassWindow(QWidget):
                         local_main, local_sp = parse_version(local_version or "")
 
                         if not local_version:
-                            status = f"未获取到本地版本"
-                            status_type = "error"
+                            status = f"未检测到本地安装"
+                            status_type = "not_installed"
                         elif online_main > local_main or (online_main == local_main and online_sp > local_sp):
                             status = f"有新版本可用！"
                             status_type = "update_available"
