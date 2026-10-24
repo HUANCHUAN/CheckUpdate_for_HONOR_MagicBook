@@ -1,6 +1,6 @@
 {
-  "version": "11.0.0.23",
+  "version": "11.0.0.24",
   "release_date": "2026-10-24",
-  "release_notes": "【新增】未获取到本地版本（应用未安装）时仍显示下载入口，可直接前往官网下载；\n【优化】增加弹窗互斥限制，避免快速重复点击时打开多个相同窗口；\n【优化】调整应用图标四周留白，图标显示更饱满清晰；\n\n此版本为优化和修复问题推荐更新～",
-  "download_url": "https://gitee.com/CNHUANCHUAN/CheckUpdate_for_HONOR_MagicBook/releases/download/11.0.0.23/HonorUpdateChecker%2011_Setup.exe"
+  "release_notes": "【修复】升级安装时若旧版本仍在后台运行，会提示无法写入安装目录：安装程序现在会先结束旧版本进程再覆盖文件；\n【优化】卸载时同样先结束运行中的程序，避免删除失败；\n\n此版本为修复问题推荐更新～",
+  "download_url": "https://gitee.com/CNHUANCHUAN/CheckUpdate_for_HONOR_MagicBook/releases/download/11.0.0.24/HonorUpdateChecker%2011_Setup.exe"
 }
